@@ -1,52 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<base target="_top">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PORTOEX — Controle de Refeições</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --navy:#1A3A6E; --navy-d:#12294f; --orange:#E8611A; --orange-d:#c94f12;
   --bg:#f4f6fa; --card:#fff; --line:#e2e8f0; --txt:#1e293b; --muted:#64748b;
-  --ok:#16a34a; --warn:#d97706; --danger:#dc2626;
+  --ok:#16a34a; --danger:#dc2626;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);font-size:14px}
 h1,h2,h3,.cond{font-family:'Barlow Condensed',sans-serif;letter-spacing:.3px}
 button{font-family:inherit;cursor:pointer;border:none;border-radius:8px;font-weight:600}
 input,select,textarea{font-family:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;width:100%;background:#fff}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy)}
+input:focus,select:focus{outline:none;border-color:var(--navy)}
 .hidden{display:none!important}
 
-/* LOGIN */
-#login{position:fixed;inset:0;background:linear-gradient(135deg,var(--navy),var(--navy-d));display:flex;align-items:center;justify-content:center;z-index:100}
-#login .box{background:#fff;padding:38px 34px;border-radius:16px;width:340px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-#login h1{color:var(--navy);font-size:30px;text-align:center}
-#login .sub{color:var(--orange);font-weight:700;text-align:center;font-size:13px;letter-spacing:2px;margin-bottom:24px}
-#login input{margin-bottom:12px}
-#login button{width:100%;background:var(--orange);color:#fff;padding:12px;font-size:15px;margin-top:6px}
-#login .err{color:var(--danger);font-size:12px;text-align:center;min-height:16px;margin-top:8px}
-
-/* HEADER */
 header{background:var(--navy);color:#fff;padding:0 18px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:40}
 header .logo{font-family:'Barlow Condensed';font-size:24px;font-weight:700}
 header .logo span{color:var(--orange)}
-header .u{font-size:12px;display:flex;align-items:center;gap:12px}
-header .u button{background:rgba(255,255,255,.15);color:#fff;padding:6px 12px;font-size:12px}
-
-/* TABS */
+header .sync{font-size:11px;opacity:.8}
 nav{background:#fff;border-bottom:1px solid var(--line);display:flex;gap:2px;padding:0 12px;overflow-x:auto;position:sticky;top:56px;z-index:39}
 nav button{background:none;color:var(--muted);padding:14px 16px;border-radius:0;border-bottom:3px solid transparent;white-space:nowrap;font-size:13px}
 nav button.active{color:var(--navy);border-bottom-color:var(--orange)}
-
 main{max-width:1200px;margin:0 auto;padding:20px 16px 60px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
 .card h2{color:var(--navy);font-size:20px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .card h2 .badge{background:var(--orange);color:#fff;font-family:'Inter';font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px}
-
-.row{display:flex;gap:12px;flex-wrap:wrap}
-.row>*{flex:1;min-width:140px}
+.row{display:flex;gap:12px;flex-wrap:wrap}.row>*{flex:1;min-width:140px}
 label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
 .field{margin-bottom:12px}
 .btn{background:var(--navy);color:#fff;padding:10px 18px}
@@ -54,425 +38,332 @@ label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bot
 .btn-sm{padding:6px 12px;font-size:12px}
 .btn-ghost{background:#f1f5f9;color:var(--navy);padding:8px 14px}
 .btn-danger{background:#fee2e2;color:var(--danger);padding:6px 10px;font-size:12px}
-
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{background:#f8fafc;color:var(--muted);text-align:left;padding:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--line)}
 td{padding:10px;border-bottom:1px solid var(--line)}
 tr:hover td{background:#fafbfc}
 .tag{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
-.tag-op{background:#fef3c7;color:#92400e}
-.tag-lib{background:#dcfce7;color:#166534}
-.tag-avulsa{background:#fce7f3;color:#9d174d}
+.tag-op{background:#fef3c7;color:#92400e}.tag-lib{background:#dcfce7;color:#166534}
 .money{font-variant-numeric:tabular-nums;font-weight:600}
 .stat{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
 .stat .box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;flex:1;min-width:150px}
 .stat .box .n{font-family:'Barlow Condensed';font-size:28px;font-weight:700;color:var(--navy)}
-.stat .box .n.o{color:var(--orange)}
-.stat .box .l{font-size:12px;color:var(--muted)}
-.mut{color:var(--muted);font-size:12px}
-.empty{text-align:center;color:var(--muted);padding:30px}
-.chk{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer}
-.chk input{width:auto}
-.chk.on{border-color:var(--orange);background:#fff7ed}
-.grid-people{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 22px;border-radius:10px;z-index:200;box-shadow:0 8px 30px rgba(0,0,0,.25);font-weight:500}
-.out{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:10px;white-space:pre-wrap;font-family:'Inter';font-size:13px;line-height:1.7;max-height:400px;overflow:auto}
+.stat .box .n.o{color:var(--orange)}.stat .box .l{font-size:12px;color:var(--muted)}
+.mut{color:var(--muted);font-size:12px}.empty{text-align:center;color:var(--muted);padding:30px}
+.chk{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px}
+.chk input{width:auto}.chk.on{border-color:var(--orange);background:#fff7ed}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 22px;border-radius:10px;z-index:200;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.out{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:10px;white-space:pre-wrap;font-size:13px;line-height:1.7;max-height:400px;overflow:auto}
+#loader{position:fixed;inset:0;background:rgba(244,246,250,.7);display:flex;align-items:center;justify-content:center;z-index:150}
+.spin{width:40px;height:40px;border:4px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
 @media(max-width:640px){.row>*{min-width:100%}main{padding:14px 10px 60px}}
 </style>
 </head>
 <body>
+<div id="loader"><div class="spin"></div></div>
 
-<!-- LOGIN -->
-<div id="login">
-  <div class="box">
-    <h1>PORTO<span style="color:var(--orange)">EX</span></h1>
-    <div class="sub">CONTROLE DE REFEIÇÕES</div>
-    <input id="lu" placeholder="Usuário" autocomplete="off">
-    <input id="lp" type="password" placeholder="Senha">
-    <button onclick="doLogin()">ENTRAR</button>
-    <div class="err" id="lerr"></div>
-  </div>
-</div>
+<header>
+  <div class="logo">PORTO<span>EX</span> · Refeições</div>
+  <div class="sync" id="sync">Planilha conectada</div>
+</header>
+<nav>
+  <button class="active" onclick="tab('dash',this)">Painel</button>
+  <button onclick="tab('colab',this)">Colaboradores</button>
+  <button onclick="tab('lib',this)">Liberações do Dia</button>
+  <button onclick="tab('avulsa',this)">Refeição Avulsa</button>
+  <button onclick="tab('fech',this)">Fechamento</button>
+</nav>
+<main>
 
-<!-- APP -->
-<div id="app" class="hidden">
-  <header>
-    <div class="logo">PORTO<span>EX</span> · Refeições</div>
-    <div class="u"><span id="who"></span><button onclick="logout()">Sair</button></div>
-  </header>
-  <nav>
-    <button class="active" onclick="tab('dash',this)">Painel</button>
-    <button onclick="tab('colab',this)">Colaboradores</button>
-    <button onclick="tab('lib',this)">Liberações do Dia</button>
-    <button onclick="tab('avulsa',this)">Refeição Avulsa</button>
-    <button onclick="tab('fech',this)">Fechamento</button>
-    <button onclick="tab('config',this)">Configurações</button>
-  </nav>
-  <main>
+  <section id="t-dash">
+    <div class="stat">
+      <div class="box"><div class="n" id="s-colab">0</div><div class="l">Colaboradores ativos</div></div>
+      <div class="box"><div class="n o" id="s-hoje">0</div><div class="l">Liberações hoje</div></div>
+      <div class="box"><div class="n" id="s-vhoje">R$ 0</div><div class="l">Valor liberado hoje</div></div>
+      <div class="box"><div class="n" id="s-mes">R$ 0</div><div class="l">Total no mês</div></div>
+    </div>
+    <div class="card">
+      <h2>Acompanhamento do dia <span class="badge" id="dash-data"></span></h2>
+      <div style="overflow-x:auto"><table id="dash-tbl"><thead><tr><th>Colaborador</th><th>Função</th><th>Situação / Operação</th><th>Valor</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
 
-    <!-- DASH -->
-    <section id="t-dash">
-      <div class="stat">
-        <div class="box"><div class="n" id="s-colab">0</div><div class="l">Colaboradores ativos</div></div>
-        <div class="box"><div class="n o" id="s-hoje">0</div><div class="l">Liberações hoje</div></div>
-        <div class="box"><div class="n" id="s-vhoje">R$ 0</div><div class="l">Valor liberado hoje</div></div>
-        <div class="box"><div class="n" id="s-mes">R$ 0</div><div class="l">Total no mês</div></div>
+  <section id="t-colab" class="hidden">
+    <div class="card">
+      <h2>Cadastrar colaborador</h2>
+      <div class="row">
+        <div class="field"><label>Nome</label><input id="c-nome" placeholder="Nome completo"></div>
+        <div class="field"><label>Função</label><input id="c-func" placeholder="Ex.: Conferente"></div>
+        <div class="field" style="max-width:160px"><label>Status</label><select id="c-status"><option value="ativo">Ativo</option><option value="inativo">Inativo</option></select></div>
+        <div class="field" style="flex:0;min-width:120px;display:flex;align-items:flex-end"><button class="btn-o" style="width:100%" onclick="saveColab()">Salvar</button></div>
       </div>
-      <div class="card">
-        <h2>Acompanhamento do dia <span class="badge" id="dash-data"></span></h2>
-        <div style="overflow-x:auto"><table id="dash-tbl"><thead><tr><th>Colaborador</th><th>Função</th><th>Situação / Operação</th><th>Valor</th></tr></thead><tbody></tbody></table></div>
-      </div>
-    </section>
+    </div>
+    <div class="card">
+      <h2>Colaboradores <span class="badge" id="colab-count">0</span></h2>
+      <div style="overflow-x:auto"><table id="colab-tbl"><thead><tr><th>Nome</th><th>Função</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
 
-    <!-- COLAB -->
-    <section id="t-colab" class="hidden">
-      <div class="card">
-        <h2>Cadastrar colaborador</h2>
-        <div class="row">
-          <div class="field"><label>Nome</label><input id="c-nome" placeholder="Nome completo"></div>
-          <div class="field"><label>Função</label><input id="c-func" placeholder="Ex.: Conferente"></div>
-          <div class="field" style="max-width:160px"><label>Status</label><select id="c-status"><option value="ativo">Ativo</option><option value="inativo">Inativo</option></select></div>
-          <div class="field" style="flex:0;min-width:120px;display:flex;align-items:flex-end"><button class="btn-o" style="width:100%" onclick="saveColab()">Salvar</button></div>
-        </div>
+  <section id="t-lib" class="hidden">
+    <div class="card">
+      <h2>Liberações do dia</h2>
+      <div class="row" style="margin-bottom:16px">
+        <div class="field" style="max-width:200px"><label>Data</label><input type="date" id="lib-data" onchange="renderLibForm()"></div>
+        <div class="field" style="max-width:200px"><label>Valor padrão (R$)</label><input type="number" step="0.01" id="lib-valor" value="0"></div>
+        <div class="field" style="display:flex;align-items:flex-end;flex:0;min-width:130px"><button class="btn-ghost" style="width:100%" onclick="marcarTodos()">Marcar todos</button></div>
+        <div class="field" style="display:flex;align-items:flex-end;flex:0;min-width:130px"><button class="btn-ghost" style="width:100%" onclick="limparTodos()">Limpar</button></div>
       </div>
-      <div class="card">
-        <h2>Colaboradores <span class="badge" id="colab-count">0</span></h2>
-        <div style="overflow-x:auto"><table id="colab-tbl"><thead><tr><th>Nome</th><th>Função</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
-      </div>
-    </section>
+      <p class="mut" style="margin-bottom:10px">Marque quem terá refeição liberada. Informe operação/observação quando aplicável.</p>
+      <div id="lib-form"></div>
+      <div style="margin-top:16px"><button class="btn-o" onclick="saveLib()">Gravar liberações do dia</button></div>
+    </div>
+  </section>
 
-    <!-- LIBERAÇÕES -->
-    <section id="t-lib" class="hidden">
-      <div class="card">
-        <h2>Liberações do dia</h2>
-        <div class="row" style="margin-bottom:16px">
-          <div class="field" style="max-width:200px"><label>Data</label><input type="date" id="lib-data" onchange="renderLibForm()"></div>
-          <div class="field" style="max-width:200px"><label>Valor padrão (R$)</label><input type="number" step="0.01" id="lib-valor" value="0"></div>
-          <div class="field" style="display:flex;align-items:flex-end;flex:0;min-width:180px"><button class="btn-ghost" style="width:100%" onclick="marcarTodos()">Selecionar todos</button></div>
-        </div>
-        <p class="mut" style="margin-bottom:10px">Marque quem terá refeição liberada. Informe operação/observação quando aplicável.</p>
-        <div id="lib-form"></div>
-        <div style="margin-top:16px;display:flex;gap:10px"><button class="btn-o" onclick="saveLib()">Gravar liberações do dia</button></div>
+  <section id="t-avulsa" class="hidden">
+    <div class="card">
+      <h2>Refeição avulsa <span class="badge">restituição</span></h2>
+      <p class="mut" style="margin-bottom:14px">Registre uma refeição avulsa para restituição junto ao financeiro e gere o texto pronto para WhatsApp/e-mail.</p>
+      <div class="row">
+        <div class="field"><label>Colaborador</label><select id="av-colab"></select></div>
+        <div class="field" style="max-width:180px"><label>Data</label><input type="date" id="av-data"></div>
+        <div class="field" style="max-width:160px"><label>Valor (R$)</label><input type="number" step="0.01" id="av-valor" placeholder="0,00"></div>
       </div>
-    </section>
+      <div class="field"><label>Motivo / Observação</label><input id="av-motivo" placeholder="Ex.: Operação extra sábado, sem refeitório"></div>
+      <button class="btn-o" onclick="saveAvulsa()">Registrar e gerar texto</button>
+    </div>
+    <div class="card hidden" id="av-out-card">
+      <h2>Texto para envio</h2>
+      <div class="out" id="av-out"></div>
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" onclick="copyText('av-out')">📋 Copiar</button>
+        <button class="btn-ghost" onclick="waText('av-out')">WhatsApp</button>
+        <button class="btn-ghost" onclick="mailText('av-out','Refeição avulsa - restituição')">E-mail</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Avulsas registradas <span class="badge" id="av-count">0</span></h2>
+      <div style="overflow-x:auto"><table id="av-tbl"><thead><tr><th>Data</th><th>Colaborador</th><th>Valor</th><th>Motivo</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
 
-    <!-- AVULSA -->
-    <section id="t-avulsa" class="hidden">
-      <div class="card">
-        <h2>Refeição avulsa <span class="badge">restituição</span></h2>
-        <p class="mut" style="margin-bottom:14px">Registre uma refeição avulsa para restituição junto ao financeiro. Gere o texto pronto para WhatsApp/e-mail.</p>
-        <div class="row">
-          <div class="field"><label>Colaborador</label><select id="av-colab"></select></div>
-          <div class="field" style="max-width:180px"><label>Data</label><input type="date" id="av-data"></div>
-          <div class="field" style="max-width:160px"><label>Valor (R$)</label><input type="number" step="0.01" id="av-valor" placeholder="0,00"></div>
-        </div>
-        <div class="field"><label>Motivo / Observação</label><input id="av-motivo" placeholder="Ex.: Operação extra sábado, sem refeitório"></div>
-        <div style="display:flex;gap:10px"><button class="btn-o" onclick="saveAvulsa()">Registrar e gerar texto</button></div>
+  <section id="t-fech" class="hidden">
+    <div class="card">
+      <h2>Fechamento por período</h2>
+      <div class="row">
+        <div class="field" style="max-width:200px"><label>De</label><input type="date" id="f-de"></div>
+        <div class="field" style="max-width:200px"><label>Até</label><input type="date" id="f-ate"></div>
+        <div class="field" style="max-width:220px"><label>Incluir</label><select id="f-tipo"><option value="tudo">Liberações + Avulsas</option><option value="lib">Só liberações</option><option value="avulsa">Só avulsas</option></select></div>
+        <div class="field" style="display:flex;align-items:flex-end;flex:0;min-width:140px"><button class="btn-o" style="width:100%" onclick="gerarFechamento()">Gerar</button></div>
       </div>
-      <div class="card" id="av-out-card" class="hidden">
-        <h2>Texto para envio</h2>
-        <div class="out" id="av-out"></div>
-        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn" onclick="copyText('av-out')">📋 Copiar</button>
-          <button class="btn-ghost" onclick="waText('av-out')">WhatsApp</button>
-          <button class="btn-ghost" onclick="mailText('av-out','Refeição avulsa - restituição')">E-mail</button>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Avulsas registradas <span class="badge" id="av-count">0</span></h2>
-        <div style="overflow-x:auto"><table id="av-tbl"><thead><tr><th>Data</th><th>Colaborador</th><th>Valor</th><th>Motivo</th><th></th></tr></thead><tbody></tbody></table></div>
-      </div>
-    </section>
+    </div>
+    <div id="fech-result"></div>
+  </section>
 
-    <!-- FECHAMENTO -->
-    <section id="t-fech" class="hidden">
-      <div class="card">
-        <h2>Fechamento por período</h2>
-        <div class="row">
-          <div class="field" style="max-width:200px"><label>De</label><input type="date" id="f-de"></div>
-          <div class="field" style="max-width:200px"><label>Até</label><input type="date" id="f-ate"></div>
-          <div class="field" style="max-width:220px"><label>Incluir</label><select id="f-tipo"><option value="tudo">Liberações + Avulsas</option><option value="lib">Só liberações</option><option value="avulsa">Só avulsas</option></select></div>
-          <div class="field" style="display:flex;align-items:flex-end;flex:0;min-width:140px"><button class="btn-o" style="width:100%" onclick="gerarFechamento()">Gerar</button></div>
-        </div>
-      </div>
-      <div id="fech-result"></div>
-    </section>
+</main>
 
-    <!-- CONFIG -->
-    <section id="t-config" class="hidden">
-      <div class="card">
-        <h2>Configuração do Firebase</h2>
-        <p class="mut" style="margin-bottom:12px">Cole a <b>databaseURL</b> do seu Realtime Database para sincronizar entre dispositivos. Enquanto vazio, os dados ficam salvos apenas neste navegador.</p>
-        <div class="field"><label>databaseURL</label><input id="cfg-url" placeholder="https://seu-projeto-default-rtdb.firebaseio.com"></div>
-        <button class="btn" onclick="saveCfg()">Salvar e conectar</button>
-        <p class="mut" id="cfg-status" style="margin-top:10px"></p>
-      </div>
-      <div class="card">
-        <h2>Dados</h2>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn-ghost" onclick="exportJson()">Exportar backup (JSON)</button>
-          <label class="btn-ghost" style="display:inline-flex;align-items:center;cursor:pointer">Importar backup<input type="file" accept=".json" onchange="importJson(event)" class="hidden"></label>
-        </div>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
 /* ---------- STATE ---------- */
-const USERS={admin:'portoex',logistica:'portoex'};
-let DB={colabs:[],libs:{},avulsas:[]};   // libs keyed by YYYY-MM-DD
-let db=null,useFb=false;
-const $=s=>document.querySelector(s);
-const money=v=>'R$ '+(Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const today=()=>new Date().toISOString().slice(0,10);
-const brDate=d=>{if(!d)return'';const[y,m,dd]=d.split('-');return `${dd}/${m}/${y}`};
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+var DB={colabs:[],libs:[],avulsas:[]};
+var $=function(s){return document.querySelector(s);};
+var money=function(v){return 'R$ '+(Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});};
+var today=function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+var brDate=function(d){if(!d)return'';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];};
 
-/* ---------- AUTH ---------- */
-function doLogin(){
-  const u=$('#lu').value.trim(),p=$('#lp').value;
-  if(USERS[u]&&USERS[u]===p){
-    sessionStorage.setItem('rfx_user',u);
-    $('#login').classList.add('hidden');$('#app').classList.remove('hidden');
-    $('#who').textContent=u;init();
-  }else $('#lerr').textContent='Usuário ou senha inválidos';
+/* ---------- BACKEND CALLS ---------- */
+function call(fn,arg,cb){
+  showLoad(true);
+  google.script.run
+    .withSuccessHandler(function(res){DB=res;showLoad(false);renderAll();if(cb)cb();})
+    .withFailureHandler(function(e){showLoad(false);toast('Erro: '+e.message);})
+    [fn](arg);
 }
-function logout(){sessionStorage.removeItem('rfx_user');location.reload();}
-
-/* ---------- PERSISTENCE ---------- */
-function connectFb(url){
-  if(!url)return false;
-  try{
-    firebase.initializeApp({databaseURL:url});
-    db=firebase.database();useFb=true;
-    db.ref('refeicoes').on('value',s=>{const v=s.val();if(v){DB={colabs:v.colabs||[],libs:v.libs||{},avulsas:v.avulsas||[]};renderAll();}});
-    return true;
-  }catch(e){console.error(e);return false;}
+function boot(){
+  google.script.run
+    .withSuccessHandler(function(res){DB=res;showLoad(false);initUI();})
+    .withFailureHandler(function(e){showLoad(false);toast('Erro ao carregar: '+e.message);})
+    .apiLoad();
 }
-function persist(){
-  if(useFb&&db){db.ref('refeicoes').set(DB);}
-  else localStorage.setItem('rfx_db',JSON.stringify(DB));
-}
-function loadLocal(){const r=localStorage.getItem('rfx_db');if(r)DB=JSON.parse(r);}
+function showLoad(b){$('#loader').classList.toggle('hidden',!b);}
 
 /* ---------- INIT ---------- */
-function init(){
-  const url=localStorage.getItem('rfx_fburl')||'';
-  $('#cfg-url').value=url;
-  if(url&&connectFb(url)){$('#cfg-status').textContent='Conectado ao Firebase.';}
-  else{loadLocal();$('#cfg-status').textContent='Usando armazenamento local.';}
+function initUI(){
   $('#lib-data').value=today();$('#av-data').value=today();$('#dash-data').textContent=brDate(today());
-  const t=new Date();$('#f-de').value=new Date(t.getFullYear(),t.getMonth(),1).toISOString().slice(0,10);$('#f-ate').value=today();
+  var t=new Date();
+  $('#f-de').value=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-01';
+  $('#f-ate').value=today();
   renderAll();renderLibForm();
 }
-
-/* ---------- TABS ---------- */
 function tab(name,el){
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');
-  document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+  document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('active');});el.classList.add('active');
+  document.querySelectorAll('main section').forEach(function(s){s.classList.add('hidden');});
   $('#t-'+name).classList.remove('hidden');
   if(name==='lib')renderLibForm();
   if(name==='avulsa')fillAvColab();
 }
-
-/* ---------- RENDER ALL ---------- */
 function renderAll(){renderColab();renderDash();renderAvulsa();fillAvColab();}
 
 /* ---------- COLAB ---------- */
 function saveColab(){
-  const nome=$('#c-nome').value.trim(),func=$('#c-func').value.trim();
+  var nome=$('#c-nome').value.trim();
   if(!nome){toast('Informe o nome');return;}
-  DB.colabs.push({id:uid(),nome,func,status:$('#c-status').value});
-  $('#c-nome').value='';$('#c-func').value='';
-  persist();renderAll();toast('Colaborador salvo');
-}
-function delColab(id){if(!confirm('Remover colaborador?'))return;DB.colabs=DB.colabs.filter(c=>c.id!==id);persist();renderAll();}
-function toggleStatus(id){const c=DB.colabs.find(x=>x.id===id);c.status=c.status==='ativo'?'inativo':'ativo';persist();renderAll();}
-function renderColab(){
-  const tb=$('#colab-tbl tbody');tb.innerHTML='';
-  if(!DB.colabs.length){tb.innerHTML='<tr><td colspan=4 class="empty">Nenhum colaborador cadastrado</td></tr>';}
-  DB.colabs.forEach(c=>{
-    tb.innerHTML+=`<tr><td><b>${c.nome}</b></td><td>${c.func||'—'}</td>
-    <td><span class="tag ${c.status==='ativo'?'tag-lib':''}" style="${c.status!=='ativo'?'background:#f1f5f9;color:#94a3b8':''}">${c.status}</span></td>
-    <td style="text-align:right;white-space:nowrap">
-      <button class="btn-ghost btn-sm" onclick="toggleStatus('${c.id}')">${c.status==='ativo'?'Inativar':'Ativar'}</button>
-      <button class="btn-danger" onclick="delColab('${c.id}')">Excluir</button></td></tr>`;
+  call('apiSaveColab',JSON.stringify({nome:nome,func:$('#c-func').value.trim(),status:$('#c-status').value}),function(){
+    $('#c-nome').value='';$('#c-func').value='';toast('Colaborador salvo');
   });
-  $('#colab-count').textContent=DB.colabs.filter(c=>c.status==='ativo').length;
+}
+function delColab(id){if(confirm('Remover colaborador?'))call('apiDelColab',id);}
+function toggleStatus(id){call('apiToggleColab',id);}
+function renderColab(){
+  var tb=$('#colab-tbl tbody');tb.innerHTML='';
+  if(!DB.colabs.length)tb.innerHTML='<tr><td colspan=4 class="empty">Nenhum colaborador cadastrado</td></tr>';
+  DB.colabs.forEach(function(c){
+    tb.innerHTML+='<tr><td><b>'+c.nome+'</b></td><td>'+(c.func||'—')+'</td>'+
+    '<td><span class="tag '+(c.status==='ativo'?'tag-lib':'')+'" style="'+(c.status!=='ativo'?'background:#f1f5f9;color:#94a3b8':'')+'">'+c.status+'</span></td>'+
+    '<td style="text-align:right;white-space:nowrap">'+
+      '<button class="btn-ghost btn-sm" onclick="toggleStatus(\''+c.id+'\')">'+(c.status==='ativo'?'Inativar':'Ativar')+'</button> '+
+      '<button class="btn-danger" onclick="delColab(\''+c.id+'\')">Excluir</button></td></tr>';
+  });
+  $('#colab-count').textContent=DB.colabs.filter(function(c){return c.status==='ativo';}).length;
 }
 
 /* ---------- LIBERAÇÕES ---------- */
+function libsByDate(d){return DB.libs.filter(function(l){return l.data===d;});}
 function renderLibForm(){
-  const data=$('#lib-data').value||today();
-  const saved=DB.libs[data]||{};
-  const ativos=DB.colabs.filter(c=>c.status==='ativo');
-  const box=$('#lib-form');box.innerHTML='';
+  var data=$('#lib-data').value||today();
+  var saved={};libsByDate(data).forEach(function(l){saved[l.colabId]=l;});
+  var ativos=DB.colabs.filter(function(c){return c.status==='ativo';});
+  var box=$('#lib-form');box.innerHTML='';
   if(!ativos.length){box.innerHTML='<p class="empty">Cadastre colaboradores ativos primeiro.</p>';return;}
-  ativos.forEach(c=>{
-    const s=saved[c.id]||{};const on=!!s.lib;
-    box.innerHTML+=`<div class="card" style="padding:12px;margin-bottom:8px;${on?'border-color:var(--orange)':''}">
-      <div class="row" style="align-items:center">
-        <label class="chk ${on?'on':''}" style="flex:0;min-width:220px" onclick="event.preventDefault()">
-          <input type="checkbox" id="lib-${c.id}" ${on?'checked':''} onchange="this.closest('.chk').classList.toggle('on',this.checked)">
-          <span><b>${c.nome}</b><br><span class="mut">${c.func||''}</span></span>
-        </label>
-        <div class="field" style="margin:0;max-width:120px"><label>Valor</label><input type="number" step="0.01" id="libv-${c.id}" value="${s.valor??''}" placeholder="padrão"></div>
-        <div class="field" style="margin:0"><label>Operação / Observação</label><input id="libo-${c.id}" value="${s.obs||''}" placeholder="Ex.: Descarga Mattel"></div>
-      </div></div>`;
+  ativos.forEach(function(c){
+    var s=saved[c.id]||{};var on=!!saved[c.id];
+    box.innerHTML+='<div class="card" id="libcard-'+c.id+'" style="padding:12px;margin-bottom:8px;'+(on?'border-color:var(--orange)':'')+'">'+
+      '<div class="row" style="align-items:center">'+
+      '<div class="chk '+(on?'on':'')+'" id="libchk-'+c.id+'" style="flex:0;min-width:220px;cursor:pointer" onclick="toggleLib(\''+c.id+'\')">'+
+        '<input type="checkbox" id="lib-'+c.id+'" '+(on?'checked':'')+' onclick="event.stopPropagation()" onchange="syncLib(\''+c.id+'\')" style="pointer-events:auto">'+
+        '<span style="pointer-events:none"><b>'+c.nome+'</b><br><span class="mut">'+(c.func||'')+'</span></span></div>'+
+      '<div class="field" style="margin:0;max-width:120px"><label>Valor</label><input type="number" step="0.01" id="libv-'+c.id+'" value="'+(on?s.valor:'')+'" placeholder="padrão"></div>'+
+      '<div class="field" style="margin:0"><label>Operação / Observação</label><input id="libo-'+c.id+'" value="'+(s.operacao||'')+'" placeholder="Ex.: Descarga Mattel"></div>'+
+      '</div></div>';
   });
 }
-function marcarTodos(){DB.colabs.filter(c=>c.status==='ativo').forEach(c=>{const cb=$('#lib-'+c.id);if(cb){cb.checked=true;cb.closest('.chk').classList.add('on');}});}
+function toggleLib(id){var cb=$('#lib-'+id);cb.checked=!cb.checked;syncLib(id);}
+function syncLib(id){var cb=$('#lib-'+id);var on=cb.checked;$('#libchk-'+id).classList.toggle('on',on);$('#libcard-'+id).style.borderColor=on?'var(--orange)':'';}
+function marcarTodos(){DB.colabs.filter(function(c){return c.status==='ativo';}).forEach(function(c){var cb=$('#lib-'+c.id);if(cb){cb.checked=true;syncLib(c.id);}});}
+function limparTodos(){DB.colabs.filter(function(c){return c.status==='ativo';}).forEach(function(c){var cb=$('#lib-'+c.id);if(cb){cb.checked=false;syncLib(c.id);}});}
 function saveLib(){
-  const data=$('#lib-data').value,vpad=Number($('#lib-valor').value)||0;
+  var data=$('#lib-data').value,vpad=Number($('#lib-valor').value)||0;
   if(!data){toast('Selecione a data');return;}
-  const day={};
-  DB.colabs.filter(c=>c.status==='ativo').forEach(c=>{
-    const cb=$('#lib-'+c.id);if(!cb)return;
-    if(cb.checked){
-      const v=$('#libv-'+c.id).value;
-      day[c.id]={lib:true,valor:v===''?vpad:Number(v),obs:$('#libo-'+c.id).value.trim()};
+  var itens=[];
+  DB.colabs.filter(function(c){return c.status==='ativo';}).forEach(function(c){
+    var cb=$('#lib-'+c.id);if(cb&&cb.checked){
+      var v=$('#libv-'+c.id).value;
+      itens.push({colabId:c.id,nome:c.nome,func:c.func,valor:v===''?vpad:Number(v),operacao:$('#libo-'+c.id).value.trim()});
     }
   });
-  DB.libs[data]=day;persist();renderDash();toast('Liberações do dia gravadas ('+Object.keys(day).length+')');
+  call('apiSaveLib',JSON.stringify({data:data,itens:itens}),function(){toast('Liberações gravadas ('+itens.length+')');});
 }
 
 /* ---------- DASH ---------- */
 function renderDash(){
-  const data=today(),day=DB.libs[data]||{};
-  const tb=$('#dash-tbl tbody');tb.innerHTML='';
-  const ativos=DB.colabs.filter(c=>c.status==='ativo');
-  let vhoje=0,nhoje=0;
-  if(!ativos.length){tb.innerHTML='<tr><td colspan=4 class="empty">Sem colaboradores</td></tr>';}
-  ativos.forEach(c=>{
-    const s=day[c.id];
-    if(s&&s.lib){nhoje++;vhoje+=Number(s.valor)||0;
-      tb.innerHTML+=`<tr><td><b>${c.nome}</b></td><td>${c.func||'—'}</td>
-      <td>${s.obs?`<span class="tag tag-op">${s.obs}</span>`:'<span class="tag tag-lib">Liberado</span>'}</td>
-      <td class="money">${money(s.valor)}</td></tr>`;
+  var data=today();var day={};libsByDate(data).forEach(function(l){day[l.colabId]=l;});
+  var tb=$('#dash-tbl tbody');tb.innerHTML='';
+  var ativos=DB.colabs.filter(function(c){return c.status==='ativo';});
+  var vhoje=0,nhoje=0;
+  if(!ativos.length)tb.innerHTML='<tr><td colspan=4 class="empty">Sem colaboradores</td></tr>';
+  ativos.forEach(function(c){
+    var s=day[c.id];
+    if(s){nhoje++;vhoje+=Number(s.valor)||0;
+      tb.innerHTML+='<tr><td><b>'+c.nome+'</b></td><td>'+(c.func||'—')+'</td>'+
+      '<td>'+(s.operacao?'<span class="tag tag-op">'+s.operacao+'</span>':'<span class="tag tag-lib">Liberado</span>')+'</td>'+
+      '<td class="money">'+money(s.valor)+'</td></tr>';
     }else{
-      tb.innerHTML+=`<tr style="opacity:.5"><td>${c.nome}</td><td>${c.func||'—'}</td><td class="mut">sem liberação</td><td class="mut">—</td></tr>`;
+      tb.innerHTML+='<tr style="opacity:.5"><td>'+c.nome+'</td><td>'+(c.func||'—')+'</td><td class="mut">sem liberação</td><td class="mut">—</td></tr>';
     }
   });
-  $('#s-colab').textContent=ativos.length;
-  $('#s-hoje').textContent=nhoje;
-  $('#s-vhoje').textContent=money(vhoje);
-  // mês
-  const mes=data.slice(0,7);let vmes=0;
-  Object.entries(DB.libs).forEach(([d,day])=>{if(d.startsWith(mes))Object.values(day).forEach(s=>vmes+=Number(s.valor)||0);});
-  DB.avulsas.forEach(a=>{if(a.data.startsWith(mes))vmes+=Number(a.valor)||0;});
+  $('#s-colab').textContent=ativos.length;$('#s-hoje').textContent=nhoje;$('#s-vhoje').textContent=money(vhoje);
+  var mes=data.slice(0,7);var vmes=0;
+  DB.libs.forEach(function(l){if(l.data.slice(0,7)===mes)vmes+=Number(l.valor)||0;});
+  DB.avulsas.forEach(function(a){if(a.data.slice(0,7)===mes)vmes+=Number(a.valor)||0;});
   $('#s-mes').textContent=money(vmes);
 }
 
 /* ---------- AVULSA ---------- */
 function fillAvColab(){
-  const sel=$('#av-colab');sel.innerHTML='';
-  DB.colabs.filter(c=>c.status==='ativo').forEach(c=>sel.innerHTML+=`<option value="${c.id}">${c.nome} — ${c.func||''}</option>`);
+  var sel=$('#av-colab');sel.innerHTML='';
+  DB.colabs.filter(function(c){return c.status==='ativo';}).forEach(function(c){
+    sel.innerHTML+='<option value="'+c.id+'">'+c.nome+' — '+(c.func||'')+'</option>';
+  });
 }
 function saveAvulsa(){
-  const cid=$('#av-colab').value,valor=Number($('#av-valor').value)||0,data=$('#av-data').value,motivo=$('#av-motivo').value.trim();
+  var cid=$('#av-colab').value,valor=Number($('#av-valor').value)||0,data=$('#av-data').value,motivo=$('#av-motivo').value.trim();
   if(!cid){toast('Cadastre/selecione um colaborador');return;}
   if(!valor){toast('Informe o valor');return;}
-  const c=DB.colabs.find(x=>x.id===cid);
-  const rec={id:uid(),cid,nome:c.nome,func:c.func,valor,data,motivo};
-  DB.avulsas.push(rec);persist();renderAvulsa();
-  $('#av-valor').value='';$('#av-motivo').value='';
-  const txt=`*PORTOEX — REFEIÇÃO AVULSA (RESTITUIÇÃO)*\n\nColaborador: ${c.nome}\nFunção: ${c.func||'—'}\nData: ${brDate(data)}\nValor: ${money(valor)}\nMotivo: ${motivo||'—'}\n\nSolicito a restituição do valor acima ao colaborador.`;
-  $('#av-out').textContent=txt;$('#av-out-card').classList.remove('hidden');
-  document.getElementById('av-out-card').scrollIntoView({behavior:'smooth'});
-  toast('Avulsa registrada');
+  var c=DB.colabs.filter(function(x){return x.id===cid;})[0];
+  call('apiSaveAvulsa',JSON.stringify({colabId:cid,nome:c.nome,func:c.func,valor:valor,data:data,motivo:motivo}),function(){
+    $('#av-valor').value='';$('#av-motivo').value='';
+    showAvulsaText(c.nome,c.func,data,valor,motivo);toast('Avulsa registrada');
+  });
 }
-function delAvulsa(id){if(!confirm('Remover avulsa?'))return;DB.avulsas=DB.avulsas.filter(a=>a.id!==id);persist();renderAvulsa();}
+function showAvulsaText(nome,func,data,valor,motivo){
+  var txt='*PORTOEX — REFEIÇÃO AVULSA (RESTITUIÇÃO)*\n\nColaborador: '+nome+'\nFunção: '+(func||'—')+'\nData: '+brDate(data)+'\nValor: '+money(valor)+'\nMotivo: '+(motivo||'—')+'\n\nSolicito a restituição do valor acima ao colaborador.';
+  $('#av-out').textContent=txt;$('#av-out-card').classList.remove('hidden');
+  $('#av-out-card').scrollIntoView({behavior:'smooth'});
+}
+function delAvulsa(id){if(confirm('Remover avulsa?'))call('apiDelAvulsa',id);}
+function reAvulsa(id){var a=DB.avulsas.filter(function(x){return x.id===id;})[0];tab('avulsa',document.querySelectorAll('nav button')[3]);showAvulsaText(a.nome,a.func,a.data,a.valor,a.motivo);}
 function renderAvulsa(){
-  const tb=$('#av-tbl tbody');tb.innerHTML='';
-  const list=[...DB.avulsas].sort((a,b)=>b.data.localeCompare(a.data));
-  if(!list.length){tb.innerHTML='<tr><td colspan=5 class="empty">Nenhuma avulsa</td></tr>';}
-  list.forEach(a=>{
-    tb.innerHTML+=`<tr><td>${brDate(a.data)}</td><td><b>${a.nome}</b></td><td class="money">${money(a.valor)}</td><td>${a.motivo||'—'}</td>
-    <td style="text-align:right"><button class="btn-ghost btn-sm" onclick="reAvulsa('${a.id}')">Texto</button> <button class="btn-danger" onclick="delAvulsa('${a.id}')">Excluir</button></td></tr>`;
+  var tb=$('#av-tbl tbody');tb.innerHTML='';
+  var list=DB.avulsas.slice().sort(function(a,b){return b.data.localeCompare(a.data);});
+  if(!list.length)tb.innerHTML='<tr><td colspan=5 class="empty">Nenhuma avulsa</td></tr>';
+  list.forEach(function(a){
+    tb.innerHTML+='<tr><td>'+brDate(a.data)+'</td><td><b>'+a.nome+'</b></td><td class="money">'+money(a.valor)+'</td><td>'+(a.motivo||'—')+'</td>'+
+    '<td style="text-align:right;white-space:nowrap"><button class="btn-ghost btn-sm" onclick="reAvulsa(\''+a.id+'\')">Texto</button> <button class="btn-danger" onclick="delAvulsa(\''+a.id+'\')">Excluir</button></td></tr>';
   });
   $('#av-count').textContent=DB.avulsas.length;
-}
-function reAvulsa(id){
-  const a=DB.avulsas.find(x=>x.id===id);
-  const txt=`*PORTOEX — REFEIÇÃO AVULSA (RESTITUIÇÃO)*\n\nColaborador: ${a.nome}\nFunção: ${a.func||'—'}\nData: ${brDate(a.data)}\nValor: ${money(a.valor)}\nMotivo: ${a.motivo||'—'}\n\nSolicito a restituição do valor acima ao colaborador.`;
-  $('#av-out').textContent=txt;$('#av-out-card').classList.remove('hidden');
-  tab('avulsa',document.querySelectorAll('nav button')[3]);
-  document.getElementById('av-out-card').scrollIntoView({behavior:'smooth'});
 }
 
 /* ---------- FECHAMENTO ---------- */
 function gerarFechamento(){
-  const de=$('#f-de').value,ate=$('#f-ate').value,tipo=$('#f-tipo').value;
+  var de=$('#f-de').value,ate=$('#f-ate').value,tipo=$('#f-tipo').value;
   if(!de||!ate){toast('Informe o período');return;}
-  const porPessoa={};let total=0,dias=new Set();
-  const add=(nome,func,valor,data)=>{
-    porPessoa[nome]=porPessoa[nome]||{func,valor:0,qtd:0};
-    porPessoa[nome].valor+=Number(valor)||0;porPessoa[nome].qtd++;total+=Number(valor)||0;dias.add(data);
-  };
-  if(tipo!=='avulsa')Object.entries(DB.libs).forEach(([d,day])=>{
-    if(d>=de&&d<=ate)Object.entries(day).forEach(([cid,s])=>{const c=DB.colabs.find(x=>x.id===cid);if(c)add(c.nome,c.func,s.valor,d);});
-  });
-  if(tipo!=='lib')DB.avulsas.forEach(a=>{if(a.data>=de&&a.data<=ate)add(a.nome+' (avulsa)',a.func,a.valor,a.data);});
-
-  const rows=Object.entries(porPessoa).sort((a,b)=>b[1].valor-a[1].valor);
-  const rateio=rows.length?total/rows.length:0;
-  let html=`<div class="card"><h2>Fechamento ${brDate(de)} a ${brDate(ate)}</h2>
-    <div class="stat">
-      <div class="box"><div class="n o">${money(total)}</div><div class="l">Total do período</div></div>
-      <div class="box"><div class="n">${rows.length}</div><div class="l">Pessoas</div></div>
-      <div class="box"><div class="n">${dias.size}</div><div class="l">Dias com registro</div></div>
-      <div class="box"><div class="n">${money(rateio)}</div><div class="l">Rateio médio / pessoa</div></div>
-    </div>
-    <div style="overflow-x:auto"><table><thead><tr><th>Colaborador</th><th>Função</th><th>Qtd</th><th>Total</th></tr></thead><tbody>`;
+  var porPessoa={},total=0,dias={};
+  function add(nome,func,valor,data){porPessoa[nome]=porPessoa[nome]||{func:func,valor:0,qtd:0};porPessoa[nome].valor+=Number(valor)||0;porPessoa[nome].qtd++;total+=Number(valor)||0;dias[data]=1;}
+  if(tipo!=='avulsa')DB.libs.forEach(function(l){if(l.data>=de&&l.data<=ate)add(l.nome,l.func,l.valor,l.data);});
+  if(tipo!=='lib')DB.avulsas.forEach(function(a){if(a.data>=de&&a.data<=ate)add(a.nome+' (avulsa)',a.func,a.valor,a.data);});
+  var rows=Object.keys(porPessoa).map(function(k){return [k,porPessoa[k]];}).sort(function(a,b){return b[1].valor-a[1].valor;});
+  var rateio=rows.length?total/rows.length:0;var ndias=Object.keys(dias).length;
+  var html='<div class="card"><h2>Fechamento '+brDate(de)+' a '+brDate(ate)+'</h2>'+
+    '<div class="stat">'+
+      '<div class="box"><div class="n o">'+money(total)+'</div><div class="l">Total do período</div></div>'+
+      '<div class="box"><div class="n">'+rows.length+'</div><div class="l">Pessoas</div></div>'+
+      '<div class="box"><div class="n">'+ndias+'</div><div class="l">Dias com registro</div></div>'+
+      '<div class="box"><div class="n">'+money(rateio)+'</div><div class="l">Rateio médio / pessoa</div></div>'+
+    '</div><div style="overflow-x:auto"><table><thead><tr><th>Colaborador</th><th>Função</th><th>Qtd</th><th>Total</th></tr></thead><tbody>';
   if(!rows.length)html+='<tr><td colspan=4 class="empty">Nenhum registro no período</td></tr>';
-  rows.forEach(([nome,d])=>html+=`<tr><td><b>${nome}</b></td><td>${d.func||'—'}</td><td>${d.qtd}</td><td class="money">${money(d.valor)}</td></tr>`);
-  html+=`<tr style="background:#f8fafc;font-weight:700"><td colspan=3>TOTAL</td><td class="money">${money(total)}</td></tr></tbody></table></div>
-    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn" onclick="copyText('fech-txt')">📋 Copiar p/ financeiro</button>
-      <button class="btn-ghost" onclick="waText('fech-txt')">WhatsApp</button>
-      <button class="btn-ghost" onclick="mailText('fech-txt','Fechamento refeições ${brDate(de)} a ${brDate(ate)}')">E-mail</button>
-    </div>
-    <div class="out" id="fech-txt" style="margin-top:14px"></div></div>`;
+  rows.forEach(function(r){html+='<tr><td><b>'+r[0]+'</b></td><td>'+(r[1].func||'—')+'</td><td>'+r[1].qtd+'</td><td class="money">'+money(r[1].valor)+'</td></tr>';});
+  html+='<tr style="background:#f8fafc;font-weight:700"><td colspan=3>TOTAL</td><td class="money">'+money(total)+'</td></tr></tbody></table></div>'+
+    '<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">'+
+      '<button class="btn" onclick="copyText(\'fech-txt\')">📋 Copiar p/ financeiro</button>'+
+      '<button class="btn-ghost" onclick="waText(\'fech-txt\')">WhatsApp</button>'+
+      '<button class="btn-ghost" onclick="mailText(\'fech-txt\',\'Fechamento refeições '+brDate(de)+' a '+brDate(ate)+'\')">E-mail</button>'+
+    '</div><div class="out" id="fech-txt" style="margin-top:14px"></div></div>';
   $('#fech-result').innerHTML=html;
-
-  let txt=`*PORTOEX — FECHAMENTO DE REFEIÇÕES*\nPeríodo: ${brDate(de)} a ${brDate(ate)}\n\n`;
-  rows.forEach(([nome,d])=>txt+=`• ${nome} (${d.func||'—'}) — ${d.qtd}x — ${money(d.valor)}\n`);
-  txt+=`\nTOTAL A PAGAR: ${money(total)}\nPessoas: ${rows.length}\nRateio médio/pessoa: ${money(rateio)}\n\nEncaminhado ao financeiro para pagamento.`;
+  var txt='*PORTOEX — FECHAMENTO DE REFEIÇÕES*\nPeríodo: '+brDate(de)+' a '+brDate(ate)+'\n\n';
+  rows.forEach(function(r){txt+='• '+r[0]+' ('+(r[1].func||'—')+') — '+r[1].qtd+'x — '+money(r[1].valor)+'\n';});
+  txt+='\nTOTAL A PAGAR: '+money(total)+'\nPessoas: '+rows.length+'\nRateio médio/pessoa: '+money(rateio)+'\n\nEncaminhado ao financeiro para pagamento.';
   $('#fech-txt').textContent=txt;
 }
 
-/* ---------- SHARE HELPERS ---------- */
-function copyText(id){navigator.clipboard.writeText($('#'+id).textContent).then(()=>toast('Copiado!'));}
+/* ---------- SHARE ---------- */
+function copyText(id){var t=$('#'+id).textContent;navigator.clipboard.writeText(t).then(function(){toast('Copiado!');},function(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Copiado!');});}
 function waText(id){window.open('https://wa.me/?text='+encodeURIComponent($('#'+id).textContent),'_blank');}
-function mailText(id,subj){window.location.href='mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent($('#'+id).textContent);}
-
-/* ---------- CONFIG ---------- */
-function saveCfg(){
-  const url=$('#cfg-url').value.trim();
-  localStorage.setItem('rfx_fburl',url);
-  if(url){if(confirm('Conectar ao Firebase agora? A página será recarregada.'))location.reload();}
-  else{$('#cfg-status').textContent='Usando armazenamento local.';toast('Salvo');}
-}
-function exportJson(){
-  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='refeicoes-backup-'+today()+'.json';a.click();
-}
-function importJson(e){
-  const f=e.target.files[0];if(!f)return;const r=new FileReader();
-  r.onload=()=>{try{DB=JSON.parse(r.result);persist();renderAll();renderLibForm();toast('Backup importado');}catch{toast('Arquivo inválido');}};
-  r.readAsText(f);
-}
+function mailText(id,subj){window.open('mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent($('#'+id).textContent),'_blank');}
 
 /* ---------- TOAST ---------- */
-let tt;function toast(m){let e=document.querySelector('.toast');if(e)e.remove();e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);clearTimeout(tt);tt=setTimeout(()=>e.remove(),2500);}
+var tt;function toast(m){var e=document.querySelector('.toast');if(e)e.remove();e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);clearTimeout(tt);tt=setTimeout(function(){e.remove();},2500);}
 
-/* ---------- AUTOLOGIN ---------- */
-if(sessionStorage.getItem('rfx_user')){$('#login').classList.add('hidden');$('#app').classList.remove('hidden');$('#who').textContent=sessionStorage.getItem('rfx_user');init();}
-$('#lp').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+/* ---------- START ---------- */
+boot();
 </script>
 </body>
 </html>
